@@ -1,0 +1,28 @@
+service: galacta-bot
+
+provider:
+  name: aws
+  runtime: nodejs22.x
+  stage: dev
+  region: us-east-1
+
+functions:
+  bot:
+    handler: dist/main.handler
+    events:
+      - http:
+          method: ANY
+          path: /interactions
+          cors: true
+      - http:
+          method: ANY
+          path: '{proxy+}'
+          cors: true
+
+plugins:
+  - serverless-offline
+
+custom:
+  webpack:
+    webpackConfig: './webpack.config.js'
+    includeModules: true

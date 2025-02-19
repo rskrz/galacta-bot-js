@@ -1,0 +1,6 @@
+services:
+  bot:
+    build: .
+    image: galacta-bot
+    # env_file:
+    #   - .env
