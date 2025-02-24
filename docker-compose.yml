@@ -1,6 +1,18 @@
+version: '3.8'
 services:
   bot:
     build: .
     image: galacta-bot
     # env_file:
     #   - .env
+  cache:
+    container_name: redis
+    image: valkey/valkey:latest
+    ports:
+      - '6379:6379'
+    volumes:
+      - cache:/data
+
+volumes:
+  cache:
+    driver: local

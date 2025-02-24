@@ -5,6 +5,7 @@ import { LunarApiService } from './lunar-api/lunar-api.service';
 import { MarvelRivalsCommands } from './marvel-rivals.commands';
 import { MarvelRivalsService } from './marvel-rivals.service';
 import { GeminiModule } from 'src/gemini/gemini.module';
+import { DiscordModule } from 'src/discord/discord.module';
 
 @Module({
   providers: [
@@ -15,7 +16,7 @@ import { GeminiModule } from 'src/gemini/gemini.module';
     MarvelRivalsCommands,
     MarvelRivalsService,
   ],
-  imports: [LunarApiModule, GeminiModule],
+  imports: [LunarApiModule, GeminiModule, DiscordModule],
   exports: [MarvelRivalsApiService],
 })
 export class MarvelRivalsModule {}

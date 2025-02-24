@@ -1,3 +1,6 @@
+import { MARVLE_RIVALS_HEROES } from './marvel-rivals/marvel-rivals-heroes';
+import { MARVEL_RIVALS_ITEMS } from './marvel-rivals/marvel-rivals-items';
+
 export const HERO_EMOJI_MAP = {
   'Adam Warlock': '<:adamwarlock_avatar:1340550566493032560>',
   'Black Panther': '<:blackpanther_avatar:1340550560004309002>',
@@ -13,6 +16,7 @@ export const HERO_EMOJI_MAP = {
   'Iron Fist': '<:ironfist_avatar:1340550357662826606>',
   'Iron Man': '<:ironman_avatar:1340550491750273075>',
   'Jeff the Land Shark': '<:jeffthelandshark_avatar:1340550486587342903>',
+  'Jeff The Land Shark': '<:jeffthelandshark_avatar:1340550486587342903>',
   Loki: '<:loki_avatar:1340550482141384816>',
   'Luna Snow': '<:lunasnow_avatar:1340550477431046185>',
   Magik: '<:magik_avatar:1340550464118329344>',
@@ -37,6 +41,7 @@ export const HERO_EMOJI_MAP = {
 };
 
 export const RANK_EMOJIS = {
+  Default: '',
   Bronze: '<:1BronzeRank:1340552249830670356>',
   Silver: '<:2SilverRank:1340552259972497539>',
   Gold: '<:3GoldRank:1340552269933842433>',
@@ -86,3 +91,21 @@ export const EXCLUDED_PHRASES = [
   'MIDTOWN',
   'EMPIRE OF ETERNAL NIGHT',
 ];
+
+export const MARVEL_RIVALS_ITEMS_MAP = Object.fromEntries(
+  MARVEL_RIVALS_ITEMS.map((item) => [item.id, item]),
+);
+
+export const MARVEL_RIVALS_HEROES_MAP = Object.fromEntries(
+  MARVLE_RIVALS_HEROES.map((item) => [item.id, item]),
+);
+
+export const DISCORD_APPLICATION_ID = '1340393691512049817';
+
+export enum DISCORD_ENTITLEMENTS {
+  PREMIUM = '1343021259818008658',
+}
+
+export const DISCORD_COMMAND_COOLDOWN_SECONDS = 5;
+export const DISCORD_COMMAND_RATE_LIMIT_USAGE_COUNT = 3;
+export const DISCORD_COMMAND_RATE_LIMIT_WINDOW_MS = 60 * 1000; //24 * 60 * 60 * 1000;

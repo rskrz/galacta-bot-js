@@ -74,11 +74,18 @@ export class MarvelRivalsService {
     };
   }
 
-  private getTopHeroes(player: MarvelRivalsPlayerDTO) {
+  public getTopHeroes(player: MarvelRivalsPlayerDTO, count = 5) {
     return player.heroes
+      .filter((hero) => hero.matches > 0)
       .toSorted((a, b) => b.matches - a.matches)
-      .slice(0, 5)
-      .filter((hero) => hero.matches > 0);
+      .slice(0, count);
+  }
+
+  public getRecentMatches(player: MarvelRivalsPlayerDTO, count = 3) {
+    return player.matchHistory
+      .filter((match) => match.isCompetitive)
+      .toSorted((a, b) => b.timestamp - a.timestamp)
+      .slice(0, count);
   }
 
   private calculateHeroPoolMetrics(
@@ -133,17 +140,19 @@ export class MarvelRivalsService {
       'One Above All': [23],
     };
 
+    const romanNumerals = ['', 'I', 'II', 'III'];
+
     for (const [rank, levels] of Object.entries(rankTiers)) {
       if (levels.includes(level)) {
         if (rank === 'Eternity' || rank === 'One Above All') {
-          return { rank, tier: -1 };
+          return { rank, tier: '' };
         }
         const tier = 3 - (level - Math.min(...levels));
-        return { rank, tier };
+        return { rank, tier: romanNumerals[tier] };
       }
     }
 
-    return { rank: 'Unknown', tier: -1 };
+    return { rank: 'Default', tier: '' };
   }
 
   public generateCategoryInfo(

@@ -14,6 +14,10 @@ export interface LunarApiPlayerStatsResponse {
   team: Team;
   stats: Stats; // Player stats (level, rank, etc.)
   hero_stats: HeroStats; // Stats for each hero
+  maps: Maps;
+  rank_history: RankHistory;
+  teammates?: Teammates;
+  match_history?: MatchHistory;
 }
 
 interface Team {
@@ -29,20 +33,22 @@ interface Stats {
   total_wins: number;
   total_losses: number;
   total_playtime: TotalPlaytime;
+  ranked?: RankedStats;
+  unranked?: RankedStats;
 }
 
 interface Rank {
   level?: number; // Rank level (e.g., 19)
   rank: string; // Rank name (e.g., "Celestial 3")
-  score: number; // Player's score
-  win_count: number; // Number of wins
+  score: number | null; // Player's score
+  win_count?: number; // Number of wins
 }
 
 interface TotalPlaytime {
-  hours: number;
-  minutes: number;
-  seconds: number;
-  raw: number;
+  hours?: number;
+  minutes?: number;
+  seconds?: number;
+  raw?: number;
 }
 
 interface HeroStats {
@@ -52,6 +58,12 @@ interface HeroStats {
 interface Hero {
   hero_name: string; // Hero's name (e.g., "Doctor Strange")
   ranked?: RankedHeroStats; // Ranked stats for the hero
+  unranked?: RankedHeroStats; // Ranked stats for the hero
+  matchup: {
+    matches: number;
+    wins: number;
+    winrate: string;
+  };
 }
 
 interface RankedHeroStats {
@@ -67,4 +79,108 @@ interface RankedHeroStats {
   damage_given: number; // Total damage dealt with this hero
   damage_received: number; // Total damage received with this hero
   heal: number; // Healing done (if relevant)
+  playtime: TotalPlaytime;
+}
+
+interface RankedStats {
+  total_matches: number;
+  total_wins: number;
+  total_losses: number;
+  total_kills: number;
+  total_assists: number;
+  total_deaths: number;
+  total_playtime: TotalPlaytime;
+  kdr: string;
+}
+
+interface Maps {
+  [key: string]: MapStat;
+}
+
+interface MapStat {
+  name: string;
+  matches: number;
+  wins: number;
+  winrate: string;
+  kills: number;
+  deaths: number;
+  assists: number;
+  play_time: TotalPlaytime;
+}
+
+interface RankHistory {
+  [key: number]: RankHistoryStat;
+}
+
+interface RankHistoryStat {
+  timestamp: number;
+  rank: {
+    old_score: number;
+    old_rank: string;
+    old_level: number;
+    new_score: number;
+    new_rank: string;
+    new_level: number;
+  };
+}
+
+interface Teammates {
+  [key: number]: Teammate;
+}
+
+interface Teammate {
+  name: string;
+  player_uid: string;
+  stats: {
+    wins: number;
+    matches: number;
+  };
+}
+
+interface MatchHistory {
+  [key: string]: MatchData;
+}
+
+interface MatchData {
+  match_timestamp: number;
+  match_duration: TotalPlaytime;
+  season: string;
+  match_uid: string;
+  match_map: {
+    id: number;
+    name: string;
+    gamemode: string;
+  };
+  score: {
+    ally: number;
+    enemy: number;
+  };
+  winner_side: number;
+  mvp_uid: number;
+  svp_uid: number;
+  gamemode: {
+    id: number;
+    name: string;
+  };
+  stats: {
+    kills: number;
+    deaths: number;
+    assists: number;
+    is_win: boolean;
+    has_escaped: boolean;
+    hero: {
+      id?: number;
+    };
+  };
+}
+
+export interface LunarApiItemResponse {
+  id: string;
+  name: string;
+  quality: string;
+  type: string;
+  applicable_hero: string;
+  icon: string;
+  slug: string;
+  description: string | null;
 }
